@@ -34,6 +34,7 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <skip.security-manager.tests>true</skip.security-manager.tests>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <versions.java-security-toolkit>1.0.2</versions.java-security-toolkit>
     </properties>
     <dependencies>
         <dependency>
@@ -82,6 +83,10 @@
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>rt</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.pixee</groupId>
+            <artifactId>java-security-toolkit</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <resources>
@@ -122,5 +127,13 @@
             </plugin>
         </plugins>
     </build>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.pixee</groupId>
+                <artifactId>java-security-toolkit</artifactId>
+                <version>${versions.java-security-toolkit}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
