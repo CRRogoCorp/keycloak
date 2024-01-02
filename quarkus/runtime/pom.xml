@@ -4,6 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <parent>
         <artifactId>keycloak-quarkus-parent</artifactId>
+
         <groupId>org.keycloak</groupId>
         <version>999-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -662,6 +663,10 @@
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.pixee</groupId>
+            <artifactId>java-security-toolkit</artifactId>
         </dependency>
     </dependencies>
 
