@@ -63,7 +63,9 @@ public class ElytronOCSPProvider extends OCSPProvider {
     @Override
     protected OCSPRevocationStatus check(KeycloakSession session, X509Certificate cert, X509Certificate issuerCertificate, List<URI> responderURIs, X509Certificate responderCert, Date date) throws CertPathValidatorException {
         if (responderURIs == null || responderURIs.size() == 0)
-            throw new IllegalArgumentException("Need at least one responder");
+            {
+                throw new IllegalArgumentException("Need at least one responder");
+            }
 
             try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
