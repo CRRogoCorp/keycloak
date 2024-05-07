@@ -56,7 +56,9 @@ public class ElytronUserIdentityExtractorProvider  extends UserIdentityExtractor
         public Object extractUserIdentity(X509Certificate[] certs) {
 
             if (certs == null || certs.length == 0)
-                throw new IllegalArgumentException();
+                {
+                    throw new IllegalArgumentException();
+                }
 
                 Principal name = x500Name.apply(certs);
                 X500AttributePrincipalDecoder xDecoder = new X500AttributePrincipalDecoder(x500NameStyle);
