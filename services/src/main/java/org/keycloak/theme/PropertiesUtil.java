@@ -17,6 +17,7 @@
 
 package org.keycloak.theme;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.jboss.logging.Logger;
 
 import java.io.BufferedReader;
@@ -54,7 +55,7 @@ public class PropertiesUtil {
      */
     public static Charset detectEncoding(InputStream in) throws IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in, DEFAULT_ENCODING))) {
-            String firstLine = br.readLine();
+            String firstLine = BoundedLineReader.readLine(br, 5_000_000);
             if (firstLine != null) {
                 Matcher matcher = DETECT_ENCODING_PATTERN.matcher(firstLine);
                 if (matcher.find()) {

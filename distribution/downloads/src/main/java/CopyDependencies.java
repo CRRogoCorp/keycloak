@@ -1,3 +1,4 @@
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class CopyDependencies {
         BufferedReader br = new BufferedReader(new InputStreamReader(CopyDependencies.class.getResourceAsStream("files")));
 
         Path target = targetRoot;
-        for (String l = br.readLine(); l != null; l = br.readLine()) {
+        for (String l = BoundedLineReader.readLine(br, 5_000_000); l != null; l = BoundedLineReader.readLine(br, 5_000_000)) {
 
             if (l.startsWith("./")) {
                 target = targetRoot.resolve(l.replace("./", "").replace('/', File.separatorChar));
