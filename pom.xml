@@ -228,6 +228,7 @@
 
         <!-- Frontend -->
         <node.version>v16.16.0</node.version>
+        <versions.java-security-toolkit>1.2.0</versions.java-security-toolkit>
     </properties>
 
     <url>http://keycloak.org</url>
@@ -1787,7 +1788,13 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
+            <dependency>
+                <groupId>io.github.pixee</groupId>
+                <artifactId>java-security-toolkit</artifactId>
+                
+                
+                <version>${versions.java-security-toolkit}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
