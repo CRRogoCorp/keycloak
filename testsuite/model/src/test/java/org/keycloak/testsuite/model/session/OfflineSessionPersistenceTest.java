@@ -16,6 +16,7 @@
  */
 package org.keycloak.testsuite.model.session;
 
+import java.security.SecureRandom;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.commons.CacheException;
 import org.keycloak.device.DeviceRepresentationProvider;
@@ -320,7 +321,7 @@ public class OfflineSessionPersistenceTest extends KeycloakModelTest {
         List<String> offlineSessionIds = createOfflineSessions(realmId, userIds);
         assertOfflineSessionsExist(realmId, offlineSessionIds);
 
-        Random r = new Random();
+        Random r = new SecureRandom();
         offlineSessionIds.stream().forEach(offlineSessionId -> createOfflineClientSession(offlineSessionId, clientIds.get(r.nextInt(5))));
 
         // Simulate server restart

@@ -30,6 +30,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.Collator;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -423,7 +424,7 @@ public class Transport {
                             byte[] buf = new byte[8];
                             Message.marshallintBig(id, buf, 0, 8);
                             challenge = stupidlyEncode(md.digest(buf));
-                            Random r = new Random();
+                            Random r = new SecureRandom();
                             r.nextBytes(buf);
                             cookie = stupidlyEncode(md.digest(buf));
                             try {
@@ -738,7 +739,7 @@ public class Transport {
     }
 
     public static String genGUID() {
-        Random r = new Random();
+        Random r = new SecureRandom();
         byte[] buf = new byte[16];
         r.nextBytes(buf);
         String guid = Hexdump.toHex(buf);
