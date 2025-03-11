@@ -14,6 +14,7 @@ import cx.ath.matthew.debug.Debug;
 import cx.ath.matthew.unix.UnixSocket;
 import cx.ath.matthew.unix.UnixSocketAddress;
 import cx.ath.matthew.utils.Hexdump;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -138,7 +139,7 @@ public class Transport {
             String s = null;
             String cookie = null;
             long now = System.currentTimeMillis() / 1000;
-            while (null != (s = r.readLine())) {
+            while (null != (s = BoundedLineReader.readLine(r, 5_000_000))) {
                 String[] line = s.split(" ");
                 long timestamp = Long.parseLong(line[1]);
                 if (line[0].equals(ID) && (!(timestamp < 0 ||
@@ -171,7 +172,7 @@ public class Transport {
             if (cookiefile.exists()) {
                 BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(cookiefile)));
                 String s = null;
-                while (null != (s = r.readLine())) {
+                while (null != (s = BoundedLineReader.readLine(r, 5_000_000))) {
                     String[] line = s.split(" ");
                     long time = Long.parseLong(line[1]);
                     // expire stale cookies

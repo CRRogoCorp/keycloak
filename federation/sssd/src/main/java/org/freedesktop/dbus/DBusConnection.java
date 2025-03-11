@@ -11,6 +11,7 @@
 package org.freedesktop.dbus;
 
 import cx.ath.matthew.debug.Debug;
+import io.github.pixee.security.BoundedLineReader;
 import org.freedesktop.DBus;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.exceptions.DBusExecutionException;
@@ -243,7 +244,7 @@ public class DBusConnection extends AbstractConnection {
                         File uuidfile = new File("/var/lib/dbus/machine-id");
                         if (!uuidfile.exists()) throw new DBusException(getString("cannotResolveSessionBusAddress"));
                         try (BufferedReader r = new BufferedReader(new FileReader(uuidfile))) {
-                            String uuid = r.readLine();
+                            String uuid = BoundedLineReader.readLine(r, 5_000_000);
                             String homedir = System.getProperty("user.home");
                             File addressfile = new File(homedir + "/.dbus/session-bus",
                                     uuid + "-" + display.replaceAll(":([0-9]*)\\..*", "$1"));
@@ -251,7 +252,7 @@ public class DBusConnection extends AbstractConnection {
                                 throw new DBusException(getString("cannotResolveSessionBusAddress"));
                             try (BufferedReader r2 = new BufferedReader(new FileReader(addressfile))) {
                                 String l;
-                                while (null != (l = r2.readLine())) {
+                                while (null != (l = BoundedLineReader.readLine(r2, 5_000_000))) {
                                     if (Debug.debug) Debug.print(Debug.VERBOSE, "Reading D-Bus session data: " + l);
                                     if (l.matches("DBUS_SESSION_BUS_ADDRESS.*")) {
                                         s = l.replaceAll("^[^=]*=", "");
