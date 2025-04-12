@@ -16,6 +16,8 @@
  */
 package org.keycloak.testsuite.forms;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.hamcrest.Matchers;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.keycloak.OAuth2Constants;
@@ -1361,7 +1363,7 @@ public class ResetPasswordTest extends AbstractTestRealmKeycloakTest {
 
     private boolean isValidUrl(String url) {
         try {
-            new URL(url);
+            Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             return true;
         } catch (MalformedURLException e) {
             return false;
