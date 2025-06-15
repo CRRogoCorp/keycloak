@@ -110,6 +110,10 @@
             <groupId>org.apache.maven.wagon</groupId>
             <artifactId>wagon-http-shared</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.pixee</groupId>
+            <artifactId>java-security-toolkit</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
