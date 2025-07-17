@@ -17,6 +17,8 @@
 
 package org.keycloak.quarkus.runtime.hostname;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.keycloak.urls.UrlType.ADMIN;
 import static org.keycloak.urls.UrlType.BACKEND;
 import static org.keycloak.urls.UrlType.FRONTEND;
@@ -217,7 +219,7 @@ public final class DefaultHostnameProvider implements HostnameProvider, Hostname
             String url = config.get("hostname-url");
 
             if (url != null) {
-                frontEndBaseUri = new URL(url).toURI();
+                frontEndBaseUri = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI();
             }
         } catch (MalformedURLException | URISyntaxException cause) {
             throw new RuntimeException("Invalid base URL for FrontEnd URLs: " + config.get("hostname-url"), cause);
@@ -264,7 +266,7 @@ public final class DefaultHostnameProvider implements HostnameProvider, Hostname
             String url = config.get("admin-url");
 
             if (url != null) {
-                adminBaseUri = new URL(url).toURI();
+                adminBaseUri = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI();
             }
         } catch (MalformedURLException | URISyntaxException cause) {
             throw new RuntimeException("Invalid base URL for Admin URLs: " + config.get("admin-url"), cause);
